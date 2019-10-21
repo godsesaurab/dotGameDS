@@ -1,0 +1,15 @@
+{
+  "name": "dot_mult_game",
+  "version": "1.0.0",
+  "description": "first ds game",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server0.js && node server1.js"
+  },
+  "dependencies": {
+    "express": "^4.14.0",
+    "node-cron": "^2.0.3",
+    "redis": "^2.8.0",
+    "socket.io": "^1.7.2"
+  }
+}
