@@ -18,9 +18,13 @@ cron.schedule('*/15 * * * *', () => {
 
 app.set('port', 5000);
 app.use('/static', express.static(__dirname + '/static'));
-
+app.use('/icon', express.static(__dirname + '/static/icon.png'));
 // Routing
 app.get('/', function(request, response) {
+  response.sendFile(path.join(__dirname, 'intro.html'));
+});
+
+app.get('/go', function(request, response) {
   response.sendFile(path.join(__dirname, 'index.html'));
 });
 
