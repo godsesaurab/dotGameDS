@@ -42,7 +42,7 @@ document.addEventListener('keyup', function(event) {
 socket.emit('new player',playerName);
 setInterval(function() {
   socket.emit('movement', movement);
-}, 1000 / 60);
+}, 10);
 
 var canvas = document.getElementById('canvas');
 canvas.width = 1500;
@@ -102,3 +102,8 @@ if(playername!=undefined)
 document.getElementById('winner').innerHTML='WINNER : ['+playernum+']   '+playername;
 
 });
+
+
+socket.on('timer',function(data){
+  document.getElementById('timer').innerHTML ="Time Remaining For This Game = " + data[0].toString() + ":" + (data[1] < 10 ? "0" : "") + String(data[1]);
+})

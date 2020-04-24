@@ -8,13 +8,15 @@ var app = express();
 var server = http.Server(app);
 var io = socketIO(server);
 var cron = require('node-cron');
- 
+
 cron.schedule('*/15 * * * *', () => {
 	players = {};
 	count =0;
-  //console.log('restarting server every fifteen minutes');
+	countdown(15,60)
 });
-
+var minutes = new Date().getMinutes();
+var seconds=  new Date().getSeconds();
+countdown(15-(minutes%15),60-seconds);
 
 app.set('port', 5000);
 app.use('/static', express.static(__dirname + '/static'));
@@ -75,10 +77,28 @@ io.on('connection', function(socket) {
 });
 
 
-setInterval(function() {
-  io.sockets.emit('state', players);
-}, 1000 / 60);
+function countdown(minutes,sec) {
+    var seconds = sec;
+    var mins = minutes
+    function tick() {
+        var current_minutes = mins-1
+        seconds--;
+        io.sockets.emit('timer',[current_minutes,seconds])
+        
+        if( seconds > 0 ) {
+            setTimeout(tick, 1000);
+        } else {
+            if(mins > 1){
+                countdown(mins-1,60);           
+            }
+        }
+    }
+    tick();
+}
 
 setInterval(function() {
+  io.sockets.emit('state', players);
   io.sockets.emit('winner', players);
-}, 1000 /60);
+}, 10);
+
+
