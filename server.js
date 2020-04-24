@@ -53,19 +53,19 @@ io.on('connection', function(socket) {
   socket.on('movement', function(data) {
     var player = players[socket.id] || {};
     if (data.left) {
-      player.x -=5;
+      player.x =(player.x + (1500-5)) %1500;
      
     }
     if (data.up) {
-      player.y -=5;
+      player.y =(player.y + (650-5)) % 650;
      
     }
     if (data.right) {
-      player.x +=5;
+      player.x = (player.x + 5)%1500;
      
     }
     if (data.down) {
-      player.y +=5;
+      player.y = (player.y + 5)%650;
       
     }
   });
